@@ -6,10 +6,22 @@
 //  Copyright © 2020 DO NGOC HUYEN. All rights reserved.
 //
 
+#include "Snake.hpp"
 #include <iostream>
+#include <stdexcept>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+using namespace std;
+
+int main(int argc, const char **arg)
+{
+ try
+    {
+    Snake s;
+    return s.exec();
+    } catch (exception &e)
+    {
+        cerr << e.what() << endl;
+        return 1;
+    }
 }
+

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DC624A01243B30F400AEB997 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC624A00243B30F400AEB997 /* main.cpp */; };
+		DC624A09243B310E00AEB997 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC624A08243B310E00AEB997 /* SDL2.framework */; };
+		DC624A0A243B310E00AEB997 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC624A08243B310E00AEB997 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DC624A0E243B312B00AEB997 /* Snake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC624A0C243B312B00AEB997 /* Snake.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,11 +23,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		DC624A0B243B310E00AEB997 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DC624A0A243B310E00AEB997 /* SDL2.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DC6249FD243B30F400AEB997 /* Game SNAKE Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Game SNAKE Project"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC624A00243B30F400AEB997 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DC624A08243B310E00AEB997 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		DC624A0C243B312B00AEB997 /* Snake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Snake.cpp; sourceTree = "<group>"; };
+		DC624A0D243B312B00AEB997 /* Snake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Snake.hpp; sourceTree = "<group>"; };
+		DC624A0F243B313900AEB997 /* Check.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC624A09243B310E00AEB997 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +62,7 @@
 			children = (
 				DC6249FF243B30F400AEB997 /* Game SNAKE Project */,
 				DC6249FE243B30F400AEB997 /* Products */,
+				DC624A07243B310E00AEB997 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +78,19 @@
 			isa = PBXGroup;
 			children = (
 				DC624A00243B30F400AEB997 /* main.cpp */,
+				DC624A0F243B313900AEB997 /* Check.h */,
+				DC624A0C243B312B00AEB997 /* Snake.cpp */,
+				DC624A0D243B312B00AEB997 /* Snake.hpp */,
 			);
 			path = "Game SNAKE Project";
+			sourceTree = "<group>";
+		};
+		DC624A07243B310E00AEB997 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC624A08243B310E00AEB997 /* SDL2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -72,6 +103,7 @@
 				DC6249F9243B30F400AEB997 /* Sources */,
 				DC6249FA243B30F400AEB997 /* Frameworks */,
 				DC6249FB243B30F400AEB997 /* CopyFiles */,
+				DC624A0B243B310E00AEB997 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -119,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC624A0E243B312B00AEB997 /* Snake.cpp in Sources */,
 				DC624A01243B30F400AEB997 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +272,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -247,6 +284,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
