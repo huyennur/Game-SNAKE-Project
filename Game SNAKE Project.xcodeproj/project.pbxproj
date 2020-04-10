@@ -37,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DC09A17824401C9500B74392 /* SnakeMaterials.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = SnakeMaterials.bmp; path = ../../SnakeMaterials.bmp; sourceTree = "<group>"; };
 		DC6249FD243B30F400AEB997 /* Game SNAKE Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Game SNAKE Project"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC624A00243B30F400AEB997 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DC624A08243B310E00AEB997 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 				DC624A0F243B313900AEB997 /* Check.h */,
 				DC624A0C243B312B00AEB997 /* Snake.cpp */,
 				DC624A0D243B312B00AEB997 /* Snake.hpp */,
+				DC09A17824401C9500B74392 /* SnakeMaterials.bmp */,
 			);
 			path = "Game SNAKE Project";
 			sourceTree = "<group>";
