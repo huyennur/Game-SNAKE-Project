@@ -11,6 +11,7 @@ If snake gets out of the window, you're lost.
 If snake stabs into its body, you're lost.
 
 In this project, i use SDL2. Because i use Xcode so #include <SDL2/SDL.h> doesn't work with my code. So I change into #include "/Library/Frameworks/SDL2.framework/Headers/SDL.h" so it succeeded. 
+One more thing is that, I couldn't get the picture by its name, i must get it by its path so instead of SDL_LoadBMP("SnakeMaterials.bmp") i use its path on my desktop SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp")
 
 This is one of the part of my game, I will add more fuction in the future.
 
