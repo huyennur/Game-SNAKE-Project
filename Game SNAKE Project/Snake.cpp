@@ -21,9 +21,10 @@ Snake::Snake()
     SDL_CHECK(renderer, "SDL_CreateWindowAndRenderer");
     
     SDL_SetWindowPosition(window, 65, 126);
+    // load pictures into the window
+    auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp"); // vì không lấy được ảnh trực tiếp nên lấy qua đường path của ảnh ở desktop
     
-    auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp");
-    SDL_CHECK(surface, "SDL_LoadBMP(\"SnakeMaterials.bmfp\")");
+    SDL_CHECK(surface, "SDL_LoadBMP(\"SnakeMaterials.bmp\")");
     SnakeMaterials = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_CHECK(SnakeMaterials, "SDL_CreateTextureFromSurface");
     SDL_FreeSurface(surface);
@@ -62,7 +63,7 @@ int Snake::exec()
     }
     return 0;
 }
-
+//draw a snake
 void Snake::draw()
 {
     SDL_Rect src;
