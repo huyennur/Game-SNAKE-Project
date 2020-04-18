@@ -21,6 +21,7 @@ public:
     ~Snake();
     int exec();
     void draw();
+    void tick();
     
     static const auto HeadOpenMouth = 0;
     static const auto Tail = 1;
@@ -37,6 +38,11 @@ private:
     SDL_Texture *SnakeMaterials;
     
     deque<pair<int, int>> segmentList;
+    
+    unsigned ticks = 0;
+       
+       int dx = 1;
+       int dy = 0;
     
 };
 
