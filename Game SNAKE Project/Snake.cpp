@@ -1,11 +1,3 @@
-//
-//  Snake.cpp
-//  Game SNAKE Project
-//
-//  Created by DO NGOC HUYEN on 4/6/20.
-//  Commit first time on 4/10/20.
-//  Copyright © 2020 DO NGOC HUYEN. All rights reserved.
-//
 
 #include "Snake.hpp"
 #include "Check.h"
@@ -33,6 +25,27 @@ Snake::Snake()
     segmentList.push_back(make_pair(5, 5));
     segmentList.push_back(make_pair(5, 6));
     segmentList.push_back(make_pair(4, 6));
+    
+    generateStrawberry();
+}
+
+void Snake::generateStrawberry()
+{
+  auto done = false;
+  do
+  {
+    strawberryX = rand() % (Width / 64);
+    strawberryY = rand() % (Height / 64);
+    done = true;
+    for (const auto &segment: segmentList)
+    {
+      if (strawberryX == segment.first && strawberryY == segment.second)
+      {
+        done = false;
+        break;
+      }
+    }
+  } while (!done);
 }
 
 Snake::~Snake()
@@ -83,28 +96,39 @@ int Snake::exec()
         }
     SDL_SetRenderDrawColor(renderer, 150, 100, 150, 100);
     SDL_RenderClear(renderer);
-    auto currentTick = SDL_GetTicks();
-    for(auto t = oldTick; t < currentTick; t++)
-    {
-        tick();
+        auto currentTick = SDL_GetTicks();
+        for (auto t = oldTick; t < currentTick; t++)
+        {
+          if(!tick())
+              return 1;
+        }
+        oldTick = currentTick;
+        draw();
+        SDL_RenderPresent(renderer); // give time to see window
+        }
+        return 0;
     }
-    oldTick = currentTick;
-    draw();
-    SDL_RenderPresent(renderer);
-    }
-    return 0;
-}
 
-void Snake::tick()
+bool Snake::tick()
 {
-    if(ticks++ % 500 == 0)
-    {
-        auto p = segmentList.front();
-        p.first += dx;
-        p.second += dy;
-        segmentList.push_front(p);
-        segmentList.pop_back();
-    }
+  if (ticks++ % 250 == 0)
+  {
+    auto p = segmentList.front();
+    p.first += dx;
+    p.second += dy;
+    if (p.first < 0 || p.first >= Width / 64 ||
+        p.second < 0 || p.second >= Height / 64)
+      return false; // gameover when snake get out of the screen
+    for (const auto &segment: segmentList)
+      if (p == segment)
+        return false;
+    segmentList.push_front(p);
+    if (p.first != strawberryX || p.second != strawberryY)
+      segmentList.pop_back();
+    else
+      generateStrawberry();
+  }
+  return true;
 }
 
 //draw a snake
@@ -133,17 +157,24 @@ void Snake::draw()
         float direction = 0;
         const auto &segment = *i;
         if(i == begin(segmentList))
-        {
-            src.x = Head * 64;
-            if( i+1 != end(segmentList))
+        {// headopenmouth
+            if(i->first + dx == strawberryX && i->second + dy == strawberryY)
             {
-                const auto &nextSegment = * (i+1);
-                for(const auto &d:ds )
+                src.x = HeadOpenMouth * 64;
+            }
+            else
+            {
+                src.x = Head * 64;
+                if( i+1 != end(segmentList))
                 {
-                    if(segment.first + d[0] == nextSegment.first && segment.second + d[1] == nextSegment.second)
+                    const auto &nextSegment = * (i+1);
+                    for(const auto &d:ds )
                     {
-                        direction = d[2];
-                        break;
+                        if(segment.first + d[0] == nextSegment.first && segment.second + d[1] == nextSegment.second)
+                        {
+                            direction = d[2];
+                            break;
+                        }
                     }
                 }
             }
@@ -164,7 +195,6 @@ void Snake::draw()
             }
         }
         
-        //body part
         else
         {//body part
             const auto &nextSegment = * (i+1);
@@ -214,7 +244,13 @@ void Snake::draw()
         }
         dst.x = 64 * segment.first;
         dst.y = 64 * segment.second;
+        
         SDL_RenderCopyEx(renderer, SnakeMaterials, &src, &dst, direction, nullptr, SDL_FLIP_NONE);
-       
     }
+    src.x = Strawberry * 64;
+        
+    dst.x = strawberryX * 64;
+    dst.y = strawberryY * 64;
+    SDL_RenderCopyEx(renderer, SnakeMaterials, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
+       
 }

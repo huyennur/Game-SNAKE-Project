@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  Game SNAKE Project
-//
-//  Created by DO NGOC HUYEN on 4/6/20.
-//  Copyright © 2020 DO NGOC HUYEN. All rights reserved.
-//
 
 #include "Snake.hpp"
 #include <iostream>
@@ -18,7 +11,8 @@ int main(int argc, const char **arg)
     {
     Snake s;
     return s.exec();
-    } catch (exception &e)
+    }
+    catch (exception &e)
     {
         cerr << e.what() << endl;
         return 1;

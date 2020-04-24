@@ -1,10 +1,3 @@
-//
-//  Snake.hpp
-//  Game SNAKE Project
-//
-//  Created by DO NGOC HUYEN on 4/6/20.
-//  Copyright © 2020 DO NGOC HUYEN. All rights reserved.
-//
 
 #ifndef Snake_hpp
 #define Snake_hpp
@@ -21,7 +14,7 @@ public:
     ~Snake();
     int exec();
     void draw();
-    void tick();
+    bool tick();
     
     static const auto HeadOpenMouth = 0;
     static const auto Tail = 1;
@@ -43,6 +36,11 @@ private:
        
        int dx = 1;
        int dy = 0;
+    
+    int strawberryX;
+    int strawberryY;
+    
+    void generateStrawberry();
     
 };
 
