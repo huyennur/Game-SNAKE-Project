@@ -1,5 +1,3 @@
-
-
 #ifndef Check_h
 #define Check_h
 
@@ -10,7 +8,9 @@
 
 using namespace std;
 
-#define SDL_CHECK(x, msg) if (!(x))throw runtime_error(string(msg) + SDL_GetError());
+//check for error
+#define SDL_CHECK(x, msg)\
+if (!(x)) throw runtime_error(string(msg": ") + SDL_GetError());
 
 
 #endif /* Check_h */

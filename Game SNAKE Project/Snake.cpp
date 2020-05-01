@@ -1,4 +1,3 @@
-
 #include "Snake.hpp"
 #include "Check.h"
 
@@ -9,19 +8,23 @@ Snake::Snake()
     auto res = SDL_Init(SDL_INIT_EVERYTHING);
     SDL_CHECK(res == 0, "SDL_Init");
     SDL_CreateWindowAndRenderer(Width, Height, SDL_WINDOW_BORDERLESS, &window, &renderer);
+    //SDL_WINDOW_BORDERLESS: no window decoration(in SDL_WindowFlags)
+    
     SDL_CHECK(window, "SDL_CreateWindowAndRenderer");
     SDL_CHECK(renderer, "SDL_CreateWindowAndRenderer");
     
-    SDL_SetWindowPosition(window, 65, 126);
+    //SDL_SetWindowPosition(window, 65, 126);
+    
     // load pictures into the window
     auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp"); // vì không lấy được ảnh trực tiếp nên lấy qua đường path của ảnh ở desktop
-    
     SDL_CHECK(surface, "SDL_LoadBMP(\"SnakeMaterials.bmp\")");
+    
     SnakeMaterials = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_CHECK(SnakeMaterials, "SDL_CreateTextureFromSurface");
+    
     SDL_FreeSurface(surface);
     
-
+    //3 segments to draw a snake on the screen: tail, body, head
     segmentList.push_back(make_pair(5, 5));
     segmentList.push_back(make_pair(5, 6));
     segmentList.push_back(make_pair(4, 6));
@@ -31,23 +34,26 @@ Snake::Snake()
 
 void Snake::generateStrawberry()
 {
-  auto done = false;
-  do
-  {
-    strawberryX = rand() % (Width / 64);
-    strawberryY = rand() % (Height / 64);
-    done = true;
-    for (const auto &segment: segmentList)
+    auto done = false;
+    // generate strawberry again and again
+    do
     {
-      if (strawberryX == segment.first && strawberryY == segment.second)
-      {
-        done = false;
-        break;
-      }
+        strawberryX = rand() % (Width / 64);
+        strawberryY = rand() % (Height / 64);
+        done = true;
+        for (const auto &segment: segmentList)
+        {
+            if (strawberryX == segment.first && strawberryY == segment.second)
+            {
+                done = false;
+                break;
+            }
+        }
     }
-  } while (!done);
+    while (!done);
 }
 
+//destructor
 Snake::~Snake()
 {
     SDL_DestroyRenderer(renderer);
@@ -55,6 +61,7 @@ Snake::~Snake()
     SDL_Quit();
 }
 
+//hàm thực hiện
 int Snake::exec()
 {
     auto oldTick = SDL_GetTicks();
@@ -67,6 +74,7 @@ int Snake::exec()
             {
                 case SDL_KEYDOWN:
                 {
+                    // move snake by keyboard
                     switch(e.key.keysym.sym)
                     {
                         case SDLK_UP:
@@ -109,26 +117,40 @@ int Snake::exec()
         return 0;
     }
 
+
 bool Snake::tick()
 {
-  if (ticks++ % 250 == 0)
-  {
-    auto p = segmentList.front();
-    p.first += dx;
-    p.second += dy;
-    if (p.first < 0 || p.first >= Width / 64 ||
-        p.second < 0 || p.second >= Height / 64)
-      return false; // gameover when snake get out of the screen
-    for (const auto &segment: segmentList)
-      if (p == segment)
-        return false;
-    segmentList.push_front(p);
-    if (p.first != strawberryX || p.second != strawberryY)
-      segmentList.pop_back();
-    else
-      generateStrawberry();
-  }
-  return true;
+    if (ticks++ % 250 == 0) // time to move snake
+    {
+        auto p = segmentList.front();
+        p.first += dx;
+        p.second += dy;
+        
+        // it's out when snake get out of the screen
+        if (p.first < 0 || p.first >= Width / 64 || p.second < 0 || p.second >= Height / 64)
+        {
+            return false;
+        }
+        
+        // it's out if snake eats its body
+        for (const auto &segment: segmentList)
+        {
+            if (p == segment)
+            {
+                return false;
+            }
+        }
+        
+        segmentList.push_front(p);
+        
+        // this part makes snake grows when it eat strawberry
+        if (p.first != strawberryX || p.second != strawberryY)
+        {
+            segmentList.pop_back();
+        }
+        else generateStrawberry(); // make the strawberry disappears when snake eats it
+    }
+    return true;
 }
 
 //draw a snake
@@ -144,6 +166,7 @@ void Snake::draw()
     dst.w = 64;
     dst.h = 64;
     
+    // đặt các TH góc cho các segment
     int ds[][3] = {
         {-1 , 0 , 0},
         {0 , -1 , 90},
@@ -152,12 +175,12 @@ void Snake::draw()
     };
     
     //head part
-    for(auto i = begin(segmentList); i != end(segmentList); i++)
+    for(auto i = segmentList.begin(); i != segmentList.end(); i++)
     {
         float direction = 0;
         const auto &segment = *i;
-        if(i == begin(segmentList))
-        {// headopenmouth
+        if(i == segmentList.begin())
+        {// snake with headopenmouth
             if(i->first + dx == strawberryX && i->second + dy == strawberryY)
             {
                 src.x = HeadOpenMouth * 64;
@@ -165,13 +188,14 @@ void Snake::draw()
             else
             {
                 src.x = Head * 64;
-                if( i+1 != end(segmentList))
+                if( i+1 != segmentList.end())
                 {
                     const auto &nextSegment = * (i+1);
                     for(const auto &d:ds )
                     {
                         if(segment.first + d[0] == nextSegment.first && segment.second + d[1] == nextSegment.second)
                         {
+                            // direction of head
                             direction = d[2];
                             break;
                         }
@@ -181,61 +205,74 @@ void Snake::draw()
         }
         
         //tail part
-        else if( i+1 == end(segmentList))
+        else if(i+1 == segmentList.end())
         {
             src.x = Tail * 64;
-            const auto &previousSegment = * (i-1);
+            const auto &previousSegment = *(i-1);
             for(const auto &d:ds )
             {
                 if(segment.first == previousSegment.first + d[0]  && segment.second== previousSegment.second + d[1] )
                 {
-                        direction = d[2];
-                        break;
+                    //direction of tail
+                    direction = d[2];
+                    break;
                 }
             }
         }
         
+        //body part
         else
-        {//body part
-            const auto &nextSegment = * (i+1);
-            const auto &previousSegment = * (i-1);
+        {
+            const auto &nextSegment = *(i+1);
+            const auto &previousSegment = *(i-1);
+            
             if(nextSegment.first == previousSegment.first)
             {
                 src.x = Straight * 64;
+                // it means that x does not change
                 direction = 90;
             }
+            
             else if(nextSegment.second == previousSegment.second)
             {
                 src.x = Straight * 64;
                 direction = 0;
             }
+            
+            //turning body --> have 4 directions
             else
             {
                 src.x = Turn * 64;
+                
+                
                 bool up = false;
                 if(segment.first == nextSegment.first && segment.second - 1 == nextSegment.second)
                         up = true;
                 if(segment.first == previousSegment.first && segment.second - 1 == previousSegment.second)
                         up = true;
         
+                
                 bool right= false;
                 if(segment.first + 1 == nextSegment.first && segment.second == nextSegment.second)
                         right = true;
                 if(segment.first + 1 == previousSegment.first && segment.second == previousSegment.second)
                         right = true;
-                    
+                  
+                
                 bool down= false;
                 if(segment.first == nextSegment.first && segment.second + 1 == nextSegment.second)
                         down = true;
                 if(segment.first == previousSegment.first && segment.second + 1 == previousSegment.second)
                         down = true;
-                    
+                   
+                
                 bool left= false;
                 if(segment.first - 1 == nextSegment.first && segment.second == nextSegment.second)
                         left = true;
                 if(segment.first - 1 == previousSegment.first && segment.second == previousSegment.second)
                         left = true;
-                    
+                  
+                
                 if(up && right) direction =0;
                 else if(right && down) direction = 90;
                 else if(down && left) direction = 180;
@@ -246,7 +283,9 @@ void Snake::draw()
         dst.y = 64 * segment.second;
         
         SDL_RenderCopyEx(renderer, SnakeMaterials, &src, &dst, direction, nullptr, SDL_FLIP_NONE);
+        // copy a portion in snakematerials to put it on window, we can rotate, put it left or right just like we want
     }
+    // put the strawberry on the screen
     src.x = Strawberry * 64;
         
     dst.x = strawberryX * 64;

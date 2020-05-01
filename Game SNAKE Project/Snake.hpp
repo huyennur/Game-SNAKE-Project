@@ -1,4 +1,3 @@
-
 #ifndef Snake_hpp
 #define Snake_hpp
 
@@ -16,6 +15,7 @@ public:
     void draw();
     bool tick();
     
+    //đặt toạ độ theo chiều của bức ảnh
     static const auto HeadOpenMouth = 0;
     static const auto Tail = 1;
     static const auto Turn = 2;
@@ -30,13 +30,16 @@ private:
     SDL_Renderer *renderer;
     SDL_Texture *SnakeMaterials;
     
+    //khởi tạo toạ độ
     deque<pair<int, int>> segmentList;
     
     unsigned ticks = 0;
        
-       int dx = 1;
-       int dy = 0;
+    //khởi tạo position of snake
+    int dx = 1;
+    int dy = 0;
     
+    //khởi tạo toạ độ của Strawberry
     int strawberryX;
     int strawberryY;
     

@@ -1,4 +1,3 @@
-
 #include "Snake.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -15,6 +14,8 @@ int main(int argc, const char **arg)
     catch (exception &e)
     {
         cerr << e.what() << endl;
+        // cerr: output stream for errors
+        // what() : Returns a null terminated character sequence that may be used to identify the exception.
         return 1;
     }
 }
