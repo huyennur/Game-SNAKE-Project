@@ -1,9 +1,9 @@
 #ifndef Snake_hpp
 #define Snake_hpp
 
-#include "/Library/Frameworks/SDL2.framework/Headers/SDL.h"
-//#include <SDL2/SDL.h> không hoạt động trên Xcode bản 11
+#include <SDL.h>
 #include <deque>
+
 using namespace std;
 
 class Snake

@@ -13,10 +13,9 @@ Snake::Snake()
     SDL_CHECK(window, "SDL_CreateWindowAndRenderer");
     SDL_CHECK(renderer, "SDL_CreateWindowAndRenderer");
     
-    //SDL_SetWindowPosition(window, 65, 126);
     
     // load pictures into the window
-    auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp"); // vì không lấy được ảnh trực tiếp nên lấy qua đường path của ảnh ở desktop
+    auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/Snake.bmp");
     SDL_CHECK(surface, "SDL_LoadBMP(\"SnakeMaterials.bmp\")");
     
     SnakeMaterials = SDL_CreateTextureFromSurface(renderer, surface);
@@ -53,6 +52,17 @@ void Snake::generateStrawberry()
     while (!done);
 }
 
+void waitUntilKeyPressed()
+{
+    SDL_Event e;
+    while (true) {
+        if ( SDL_WaitEvent(&e) != 0 &&
+             (e.type == SDL_KEYDOWN || e.type == SDL_QUIT) )
+            return;
+        SDL_Delay(100);
+    }
+}
+
 //destructor
 Snake::~Snake()
 {
@@ -64,6 +74,7 @@ Snake::~Snake()
 //hàm thực hiện
 int Snake::exec()
 {
+    waitUntilKeyPressed();
     auto oldTick = SDL_GetTicks();
     for (auto done = false; !done;)
     {
@@ -188,21 +199,22 @@ void Snake::draw()
             else
             {
                 src.x = Head * 64;
-                if( i+1 != segmentList.end())
+            }
+            if( i+1 != segmentList.end())
+            {
+                const auto &nextSegment = * (i+1);
+                for(const auto &d:ds )
                 {
-                    const auto &nextSegment = * (i+1);
-                    for(const auto &d:ds )
+                    if(segment.first + d[0] == nextSegment.first && segment.second + d[1] == nextSegment.second)
                     {
-                        if(segment.first + d[0] == nextSegment.first && segment.second + d[1] == nextSegment.second)
-                        {
-                            // direction of head
-                            direction = d[2];
-                            break;
-                        }
+                        // direction of head
+                        direction = d[2];
+                        break;
                     }
                 }
             }
         }
+        
         
         //tail part
         else if(i+1 == segmentList.end())
