@@ -1,7 +1,12 @@
 #include "Snake.hpp"
-#include "Check.h"
+#include <stdexcept>
+#include <string>
 
 using namespace std;
+
+//check for error
+#define SDL_CHECK(x, msg)\
+if (!(x)) throw runtime_error(string(msg": ") + SDL_GetError());
 
 Snake::Snake()
 {
@@ -131,7 +136,7 @@ int Snake::exec()
 
 bool Snake::tick()
 {
-    if (ticks++ % 250 == 0) // time to move snake
+    if (ticks++ % 250 == 0) // speed the snake moves
     {
         auto p = segmentList.front();
         p.first += dx;
@@ -191,7 +196,8 @@ void Snake::draw()
         float direction = 0;
         const auto &segment = *i;
         if(i == segmentList.begin())
-        {// snake with headopenmouth
+        {
+            // snake with headopenmouth
             if(i->first + dx == strawberryX && i->second + dy == strawberryY)
             {
                 src.x = HeadOpenMouth * 64;

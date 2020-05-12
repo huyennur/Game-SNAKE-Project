@@ -43,7 +43,6 @@
 		DC624A08243B310E00AEB997 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		DC624A0C243B312B00AEB997 /* Snake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Snake.cpp; sourceTree = "<group>"; };
 		DC624A0D243B312B00AEB997 /* Snake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Snake.hpp; sourceTree = "<group>"; };
-		DC624A0F243B313900AEB997 /* Check.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				DC624A00243B30F400AEB997 /* main.cpp */,
-				DC624A0F243B313900AEB997 /* Check.h */,
 				DC624A0C243B312B00AEB997 /* Snake.cpp */,
 				DC624A0D243B312B00AEB997 /* Snake.hpp */,
 				DC13F089246A2A180016E929 /* Snake.bmp */,
