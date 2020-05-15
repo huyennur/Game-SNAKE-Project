@@ -1,18 +1,16 @@
 # Game-SNAKE-Project
-Game i made
+GAME SNAKE
+This is one of my simple game SNAKE EVER!
+THIS IS A GAME USING SDL 2.0 ON C++.
 
-This is Game Snake. 
-I draw a snake and a strawberry  by myself and push it into my window.
+ In this project i use SDL2.framework which is set up in X-CODE on MACOS
 
-How to play: 
-The snake moves by using the keyboard up, down, left, right.
+HOW TO PLAY:
+The snake moves by using the keyboard UP, DOWN, LEFT, RIGHT.
 Try to move the snake to eat strawberry, when the snake eats a strawberry, it will be longer.
-If snake gets out of the window, you're lost.
-If snake stabs into its body, you're lost.
+If snake gets out of the screen, game's end.
+If snake stabs into its body, game's end.
 
-In this project, i use SDL2. Because i use Xcode so #include <SDL2/SDL.h> doesn't work with my code. So I change into #include "/Library/Frameworks/SDL2.framework/Headers/SDL.h" so it succeeded. 
-One more thing is that, I couldn't get the picture by its name, i must get it by its path so instead of SDL_LoadBMP("SnakeMaterials.bmp") i use its path on my desktop SDL_LoadBMP("/Users/dongochuyen/Desktop/SnakeMaterials.bmp")
-
-This is one of the part of my game, I will add more fuction in the future.
+NOTE: I use the path to include the picture i draw on desktop.
 
 HAVE FUN!!!
