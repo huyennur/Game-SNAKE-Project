@@ -15,16 +15,17 @@ public:
     void draw();
     bool tick();
     
+    const int Width = 1280;
+    const int Height = 720;
+    
     //đặt toạ độ theo chiều của bức ảnh
-    static const auto HeadOpenMouth = 0;
-    static const auto Tail = 1;
-    static const auto Turn = 2;
-    static const auto Straight = 3;
-    static const auto Head = 4;
-    static const auto Strawberry = 5;
+    const int HeadOpenMouth = 0;
+    const int Tail = 1;
+    const int Turn = 2;
+    const int Straight = 3;
+    const int Head = 4;
+    const int Strawberry = 5;
 
-    const static auto Width = 1280;
-    const static auto Height = 720;
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -33,7 +34,7 @@ private:
     //khởi tạo toạ độ
     deque<pair<int, int>> segmentList;
     
-    unsigned ticks = 0;
+    int ticks = 0;
        
     //khởi tạo position of snake
     int dx = 1;

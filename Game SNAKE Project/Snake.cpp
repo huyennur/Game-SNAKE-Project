@@ -20,7 +20,7 @@ Snake::Snake()
     
     
     // load pictures into the window
-    auto surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/Snake.bmp");
+    SDL_Surface *surface = SDL_LoadBMP("/Users/dongochuyen/Desktop/Snake.bmp");
     SDL_CHECK(surface, "SDL_LoadBMP(\"SnakeMaterials.bmp\")");
     
     SnakeMaterials = SDL_CreateTextureFromSurface(renderer, surface);
@@ -38,7 +38,7 @@ Snake::Snake()
 
 void Snake::generateStrawberry()
 {
-    auto done = false;
+    bool done = false;
     // generate strawberry again and again
     do
     {
@@ -73,6 +73,7 @@ Snake::~Snake()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_DestroyTexture(SnakeMaterials);
     SDL_Quit();
 }
 
@@ -81,7 +82,7 @@ int Snake::exec()
 {
     waitUntilKeyPressed();
     auto oldTick = SDL_GetTicks();
-    for (auto done = false; !done;)
+    for (bool done = false; !done;)
     {
         SDL_Event e;
         if (SDL_PollEvent(&e))
@@ -136,7 +137,7 @@ int Snake::exec()
 
 bool Snake::tick()
 {
-    if (ticks++ % 250 == 0) // speed the snake moves
+    if (ticks++ % 200 == 0) // speed the snake moves
     {
         auto p = segmentList.front();
         p.first += dx;
@@ -182,7 +183,7 @@ void Snake::draw()
     dst.w = 64;
     dst.h = 64;
     
-    // đặt các TH góc cho các segment
+    // direction of all circumstances
     int ds[][3] = {
         {-1 , 0 , 0},
         {0 , -1 , 90},
@@ -193,7 +194,7 @@ void Snake::draw()
     //head part
     for(auto i = segmentList.begin(); i != segmentList.end(); i++)
     {
-        float direction = 0;
+        int direction = 0;
         const auto &segment = *i;
         if(i == segmentList.begin())
         {
