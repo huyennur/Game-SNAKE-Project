@@ -45,6 +45,7 @@ void Snake::generateStrawberry()
         strawberryX = rand() % (Width / 64);
         strawberryY = rand() % (Height / 64);
         done = true;
+        //check if the strawberry inside the snake
         for (const auto &segment: segmentList)
         {
             if (strawberryX == segment.first && strawberryY == segment.second)
@@ -158,14 +159,18 @@ bool Snake::tick()
             }
         }
         
+        //add at the front of the snake
         segmentList.push_front(p);
         
         // this part makes snake grows when it eat strawberry
+        //if one of the condition is not equal --> pop_back
+        //if both are equal --> not pop_back --> make snake be longer
         if (p.first != strawberryX || p.second != strawberryY)
         {
+            //move the back of the snake
             segmentList.pop_back();
         }
-        else generateStrawberry(); // make the strawberry disappears when snake eats it
+        else generateStrawberry();
     }
     return true;
 }
