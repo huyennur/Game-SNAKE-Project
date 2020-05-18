@@ -122,6 +122,7 @@ int Snake::exec()
         }
     SDL_SetRenderDrawColor(renderer, 150, 100, 150, 100);
     SDL_RenderClear(renderer);
+        //tham khảo ở thenumbet.io và cplusplus.com
         auto currentTick = SDL_GetTicks();
         for (auto t = oldTick; t < currentTick; t++)
         {
