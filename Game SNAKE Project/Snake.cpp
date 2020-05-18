@@ -1,5 +1,4 @@
 #include "Snake.hpp"
-#include <stdexcept>
 #include <string>
 
 using namespace std;
@@ -238,7 +237,7 @@ void Snake::draw()
             const auto &previousSegment = *(i-1);
             for(const auto &d:ds )
             {
-                if(segment.first == previousSegment.first + d[0]  && segment.second== previousSegment.second + d[1] )
+                if(segment.first == previousSegment.first + d[0]  && segment.second == previousSegment.second + d[1] )
                 {
                     //direction of tail
                     direction = d[2];
@@ -257,7 +256,6 @@ void Snake::draw()
             if(nextSegment.first == previousSegment.first)
             {
                 src.x = Straight * 64;
-                // it means that x does not change
                 direction = 90;
             }
             
