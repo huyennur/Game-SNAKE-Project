@@ -197,11 +197,11 @@ void Snake::draw()
         {0 , 1 , -90},
     };
     
-    //head part
     for(auto i = segmentList.begin(); i != segmentList.end(); i++)
     {
         int direction = 0;
         const auto &segment = *i;
+        //head part
         if(i == segmentList.begin())
         {
             //snake with headopenmouth
