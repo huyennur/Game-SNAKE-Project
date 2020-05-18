@@ -18,7 +18,6 @@ public:
     const int Width = 1280;
     const int Height = 720;
     
-    //đặt toạ độ theo chiều của bức ảnh
     const int HeadOpenMouth = 0;
     const int Tail = 1;
     const int Turn = 2;

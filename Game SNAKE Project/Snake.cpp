@@ -126,7 +126,7 @@ int Snake::exec()
         for (auto t = oldTick; t < currentTick; t++)
         {
           if(!tick())
-              return 1;
+              return 0;
         }
         oldTick = currentTick;
         draw();
@@ -143,6 +143,7 @@ bool Snake::tick()
         auto p = segmentList.front();
         p.first += dx;
         p.second += dy;
+        
         
         // it's out when snake get out of the screen
         if (p.first < 0 || p.first >= Width / 64 || p.second < 0 || p.second >= Height / 64)
@@ -203,11 +204,12 @@ void Snake::draw()
         const auto &segment = *i;
         if(i == segmentList.begin())
         {
-            // snake with headopenmouth
-            if(i->first + dx == strawberryX && i->second + dy == strawberryY)
+            //snake with headopenmouth
+            if(segment.first + dx == strawberryX && segment.second + dy == strawberryY)
             {
                 src.x = HeadOpenMouth * 64;
             }
+            //snake with head
             else
             {
                 src.x = Head * 64;
@@ -250,6 +252,7 @@ void Snake::draw()
             const auto &nextSegment = *(i+1);
             const auto &previousSegment = *(i-1);
             
+            //straight
             if(nextSegment.first == previousSegment.first)
             {
                 src.x = Straight * 64;
@@ -268,7 +271,6 @@ void Snake::draw()
             {
                 src.x = Turn * 64;
                 
-                
                 bool up = false;
                 if(segment.first == nextSegment.first && segment.second - 1 == nextSegment.second)
                         up = true;
@@ -276,21 +278,21 @@ void Snake::draw()
                         up = true;
         
                 
-                bool right= false;
+                bool right = false;
                 if(segment.first + 1 == nextSegment.first && segment.second == nextSegment.second)
                         right = true;
                 if(segment.first + 1 == previousSegment.first && segment.second == previousSegment.second)
                         right = true;
                   
                 
-                bool down= false;
+                bool down = false;
                 if(segment.first == nextSegment.first && segment.second + 1 == nextSegment.second)
                         down = true;
                 if(segment.first == previousSegment.first && segment.second + 1 == previousSegment.second)
                         down = true;
                    
                 
-                bool left= false;
+                bool left = false;
                 if(segment.first - 1 == nextSegment.first && segment.second == nextSegment.second)
                         left = true;
                 if(segment.first - 1 == previousSegment.first && segment.second == previousSegment.second)
@@ -300,7 +302,7 @@ void Snake::draw()
                 if(up && right) direction =0;
                 else if(right && down) direction = 90;
                 else if(down && left) direction = 180;
-                else if(left && up) direction = 270;
+                else if(left && up) direction = -90;
             }
         }
         dst.x = 64 * segment.first;
